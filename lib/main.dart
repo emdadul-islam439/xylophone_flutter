@@ -8,11 +8,25 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  Expanded coloredButton({required Color color, required int audioNumber}){
+    return Expanded(
+      child: TextButton(
+        onPressed: () async {
+          final assetsAudioPlayer = AssetsAudioPlayer();
+          await assetsAudioPlayer.open(
+            Audio("assets/audios/assets_note$audioNumber.wav"),
+          );
+        },
+        style: TextButton.styleFrom(
+          backgroundColor: color,
+        ),
+        child: const SizedBox(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    const player = AssetsAudioPlayer;
-
     return MaterialApp(
       title: 'Xylophone App',
       home: Scaffold(
@@ -22,66 +36,16 @@ class MyApp extends StatelessWidget {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              child: TextButton(
-                onPressed: () async {
-                  final assetsAudioPlayer = AssetsAudioPlayer();
-
-                  assetsAudioPlayer.open(
-                    Audio("assets/audios/assets_note2.wav"),
-                  );
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.deepPurpleAccent,
-                ),
-                child: const SizedBox(),
-              ),
-            ),
-            const Expanded(
-              child: ColoredBox(color: Colors.indigo),
-            ),
-            const Expanded(
-              child: ColoredBox(color: Colors.blue),
-            ),
-            const Expanded(
-              child: ColoredBox(color: Colors.green),
-            ),
-            const Expanded(
-              child: ColoredBox(color: Colors.yellow),
-            ),
-            const Expanded(
-              child: ColoredBox(color: Colors.orange),
-            ),
-            const Expanded(
-              child: ColoredBox(color: Colors.red),
-            ),
+            coloredButton(color: Colors.deepPurpleAccent, audioNumber: 1),
+            coloredButton(color: Colors.indigo, audioNumber: 2),
+            coloredButton(color: Colors.blue, audioNumber: 3),
+            coloredButton(color: Colors.green, audioNumber: 4),
+            coloredButton(color: Colors.yellow, audioNumber: 5),
+            coloredButton(color: Colors.orange, audioNumber: 6),
+            coloredButton(color: Colors.red, audioNumber: 7),
           ],
         ),
       ),
     );
   }
 }
-//
-// class SoundPlayer extends StatelessWidget {
-//   final Color colorCode;
-//   final String soundSource;
-//
-//   const SoundPlayer({Key? key, required this.colorCode, required this.soundSource}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final player = AudioPlayer();
-//
-//     return Expanded(
-//       child: TextButton(
-//         onPressed: () async {
-//           await player.play(AssetSource(soundSource));
-//         },
-//         style: TextButton.styleFrom(
-//           backgroundColor: colorCode,
-//         ),
-//         child: const SizedBox(),
-//       ),
-//     );
-//   }
-// }
